@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1f6b45">
+<title>Quiz — Interaction en forêt tropicale</title>
+<style>
+:root{
+  --green:#1f6b45;
+  --green2:#2f8a5c;
+  --light:#eef7f1;
+  --dark:#17352a;
+  --text:#24332c;
+  --muted:#65756d;
+  --border:#d8e5dd;
+  --danger:#b83b3b;
+  --success:#217346;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text);
+  background:linear-gradient(135deg,#eaf5ee,#f7faf8);
+  min-height:100vh;
+}
+.container{
+  width:min(760px,94%);
+  margin:0 auto;
+  padding:24px 0 40px;
+}
+.header{
+  background:var(--green);
+  color:white;
+  border-radius:22px;
+  padding:28px 24px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(31,107,69,.18);
+}
+.header .icon{font-size:44px}
+.header h1{margin:8px 0 8px;font-size:clamp(25px,6vw,38px)}
+.header p{margin:0;opacity:.92;font-size:16px;line-height:1.5}
+.card{
+  background:white;
+  margin-top:18px;
+  padding:24px;
+  border-radius:20px;
+  box-shadow:0 7px 25px rgba(23,53,42,.08);
+  border:1px solid var(--border);
+}
+.progress-row{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:14px;
+  margin-bottom:9px;
+  font-weight:600;
+}
+.progress{
+  height:10px;
+  background:#e5eee8;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:24px;
+}
+.progress-bar{
+  height:100%;
+  background:var(--green2);
+  width:10%;
+  transition:width .3s ease;
+}
+.question{
+  font-size:22px;
+  line-height:1.35;
+  color:var(--dark);
+  margin:0 0 18px;
+}
+.instruction{
+  color:var(--muted);
+  font-size:14px;
+  margin:-8px 0 17px;
+}
+.options{display:grid;gap:11px}
+.option{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  border:2px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  cursor:pointer;
+  transition:.15s;
+  background:#fff;
+}
+.option:hover{border-color:#8bbda2;background:#f8fcf9}
+.option input{margin-top:3px;accent-color:var(--green);transform:scale(1.15)}
+.option.selected{border-color:var(--green2);background:var(--light)}
+.option.correct{border-color:var(--success);background:#eaf7ee}
+.option.incorrect{border-color:var(--danger);background:#fff0f0}
+.option.disabled{cursor:default}
+.feedback{
+  display:none;
+  margin-top:18px;
+  padding:16px;
+  border-radius:14px;
+  line-height:1.55;
+}
+.feedback.show{display:block}
+.feedback.correct{background:#eaf7ee;border:1px solid #b9ddc5}
+.feedback.incorrect{background:#fff0f0;border:1px solid #e8bcbc}
+.feedback strong{display:block;margin-bottom:5px}
+.actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+button{
+  border:0;
+  border-radius:13px;
+  padding:13px 20px;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+}
+#validateBtn{background:var(--green);color:#fff;flex:1}
+#nextBtn{background:#e9f1ec;color:var(--green);flex:1;display:none}
+#restartBtn{background:var(--green);color:white;width:100%;margin-top:15px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.score{
+  text-align:center;
+  padding:15px 0 5px;
+}
+.score-circle{
+  width:145px;height:145px;border-radius:50%;
+  background:var(--light);
+  border:9px solid #b9ddc5;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  margin:0 auto 20px;
+}
+.score-number{font-size:38px;font-weight:800;color:var(--green)}
+.score-label{color:var(--muted);font-size:13px}
+.result-message{font-size:19px;line-height:1.5}
+.hidden{display:none!important}
+.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:16px}
+.badge{
+  display:inline-block;padding:5px 9px;border-radius:20px;
+  background:#e9f1ec;color:var(--green);font-size:12px;font-weight:700;
+  margin-bottom:10px;
+}
+@media(max-width:520px){
+  .container{padding-top:12px}
+  .card{padding:18px}
+  .header{padding:22px 17px}
+  .question{font-size:19px}
+  .option{padding:12px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="icon">🌳</div>
+    <h1>Quiz — Interaction en forêt tropicale</h1>
+    <p>Testez vos connaissances sur les relations entre les organismes et le fonctionnement des forêts tropicales.</p>
+  </header>
+
+  <main id="quizCard" class="card">
+    <div class="progress-row">
+      <span id="progressText">Question 1 / 10</span>
+      <span id="scoreText">Score : 0</span>
+    </div>
+    <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+
+    <div class="badge" id="typeBadge">Question</div>
+    <h2 class="question" id="question"></h2>
+    <p class="instruction" id="instruction"></p>
+    <div class="options" id="options"></div>
+
+    <div id="feedback" class="feedback"></div>
+
+    <div class="actions">
+      <button id="validateBtn" onclick="validateAnswer()">Valider</button>
+      <button id="nextBtn" onclick="nextQuestion()">Question suivante →</button>
+    </div>
+  </main>
+
+  <section id="resultCard" class="card hidden">
+    <div class="score">
+      <div class="score-circle">
+        <div class="score-number" id="finalScore">0/10</div>
+        <div class="score-label">bonnes réponses</div>
+      </div>
+      <h2 id="resultTitle">Bravo !</h2>
+      <p class="result-message" id="resultMessage"></p>
+      <button id="restartBtn" onclick="restartQuiz()">↻ Recommencer le quiz</button>
+    </div>
+  </section>
+
+  <div class="footer">Quiz scientifique — Interaction en forêt tropicale</div>
+</div>
+
+<script>
+const questions = [
+  {
+    q:"Qu’est-ce que le mutualisme ?",
+    type:"single",
+    instruction:"Choisissez une seule réponse.",
+    options:[
+      "Une interaction bénéfique pour les deux partenaires",
+      "Une interaction où un seul organisme bénéficie",
+      "Une compétition entre deux espèces",
+      "Une relation toujours nuisible"
+    ],
+    answer:[0],
+    explanation:"Le mutualisme est une interaction dans laquelle les deux partenaires retirent un bénéfice."
+  },
+  {
+    q:"Quelle interaction plante–animal est particulièrement importante pour la reproduction de nombreuses plantes tropicales ?",
+    type:"single",
+    instruction:"Choisissez une seule réponse.",
+    options:["La prédation","La pollinisation","La compétition","Le parasitisme"],
+    answer:[1],
+    explanation:"La pollinisation permet le transfert du pollen et favorise la reproduction sexuée des plantes."
+  },
+  {
+    q:"Dans une forêt tropicale dense, quelle ressource peut fortement limiter la croissance des jeunes plantes au sous-bois ?",
+    type:"single",
+    instruction:"Choisissez une seule réponse.",
+    options:["La lumière","Le vent","Le sel marin","La neige"],
+    answer:[0],
+    explanation:"La canopée réduit fortement la quantité de lumière disponible au sous-bois, ce qui crée une compétition importante pour la lumière."
+  },
+  {
+    q:"Quels organismes peuvent contribuer à la dispersion des graines ?",
+    type:"multi",
+    instruction:"Plusieurs réponses sont possibles.",
+    options:["Les oiseaux","Les mammifères frugivores","Certains insectes","Uniquement les champignons"],
+    answer:[0,1,2],
+    explanation:"Les oiseaux, les mammifères et certains insectes peuvent transporter les graines, parfois sur de grandes distances."
+  },
+  {
+    q:"La compétition entre plantes peut porter sur la lumière, l’eau et les nutriments du sol.",
+    type:"boolean",
+    instruction:"Choisissez Vrai ou Faux.",
+    options:["Vrai","Faux"],
+    answer:[0],
+    explanation:"Ces ressources sont souvent limitées et peuvent donc être au cœur des interactions compétitives entre plantes."
+  },
+  {
+    q:"Quel est un rôle important des champignons mycorhiziens ?",
+    type:"single",
+    instruction:"Choisissez une seule réponse.",
+    options:[
+      "Ils peuvent améliorer l’absorption de certains nutriments et de l’eau par les plantes",
+      "Ils empêchent toute croissance des racines",
+      "Ils remplacent totalement les feuilles",
+      "Ils détruisent systématiquement les arbres"
+    ],
+    answer:[0],
+    explanation:"Les mycorhizes sont des associations entre champignons et racines. Elles peuvent notamment améliorer l’acquisition de ressources par la plante."
+  },
+  {
+    q:"Un jaguar qui capture et consomme un autre animal est un exemple de :",
+    type:"single",
+    instruction:"Choisissez une seule réponse.",
+    options:["Mutualisme","Prédation","Pollinisation","Commensalisme"],
+    answer:[1],
+    explanation:"La prédation correspond à une interaction dans laquelle un organisme capture et consomme un autre organisme."
+  },
+  {
+    q:"Toutes les interactions entre espèces dans une forêt tropicale sont-elles bénéfiques pour les deux partenaires ?",
+    type:"boolean",
+    instruction:"Choisissez Vrai ou Faux.",
+    options:["Vrai","Faux"],
+    answer:[1],
+    explanation:"Non. Les interactions peuvent être positives, négatives ou neutres pour les partenaires : mutualisme, compétition, prédation, parasitisme, commensalisme, etc."
+  },
+  {
+    q:"Pourquoi les interactions entre espèces sont-elles importantes pour le fonctionnement d’une forêt tropicale ?",
+    type:"single",
+    instruction:"Choisissez une seule réponse.",
+    options:[
+      "Elles influencent la reproduction, la régénération, la distribution des espèces et les flux de matière",
+      "Elles n’ont aucun effet sur la forêt",
+      "Elles concernent uniquement les animaux",
+      "Elles empêchent toute évolution des espèces"
+    ],
+    answer:[0],
+    explanation:"Les interactions structurent les communautés et participent à de nombreux processus écologiques essentiels au fonctionnement de l’écosystème."
+  },
+  {
+    q:"Quelle approche est la plus adaptée pour étudier les interactions écologiques en forêt tropicale ?",
+    type:"single",
+    instruction:"Choisissez la meilleure réponse.",
+    options:[
+      "Combiner observations de terrain, expérimentation et analyse des données",
+      "Observer une seule espèce pendant quelques minutes",
+      "Se limiter à des photos sans analyse",
+      "Ignorer les conditions environnementales"
+    ],
+    answer:[0],
+    explanation:"Une combinaison d’observations, d’expériences et d’analyses permet de mieux caractériser les interactions et leur contexte écologique."
+  }
+];
+
+let current = 0;
+let score = 0;
+let answered = false;
+
+const qEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const feedbackEl = document.getElementById("feedback");
+const validateBtn = document.getElementById("validateBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+function renderQuestion(){
+  answered = false;
+  const item = questions[current];
+
+  document.getElementById("progressText").textContent =
+    `Question ${current+1} / ${questions.length}`;
+  document.getElementById("scoreText").textContent = `Score : ${score}`;
+  document.getElementById("progressBar").style.width =
+    `${((current+1)/questions.length)*100}%`;
+
+  qEl.textContent = item.q;
+  document.getElementById("instruction").textContent = item.instruction;
+
+  const badge = document.getElementById("typeBadge");
+  badge.textContent =
+    item.type === "multi" ? "Réponses multiples" :
+    item.type === "boolean" ? "Vrai / Faux" : "Question";
+
+  optionsEl.innerHTML = "";
+  item.options.forEach((text,index)=>{
+    const label = document.createElement("label");
+    label.className = "option";
+    label.innerHTML = `
+      <input type="${item.type === "multi" ? "checkbox" : "radio"}"
+             name="answer" value="${index}">
+      <span>${text}</span>
+    `;
+    label.addEventListener("click",()=>{
+      if(answered) return;
+      if(item.type !== "multi"){
+        document.querySelectorAll(".option").forEach(o=>o.classList.remove("selected"));
+      }
+      setTimeout(()=>{
+        const input = label.querySelector("input");
+        if(input.checked) label.classList.add("selected");
+        else label.classList.remove("selected");
+      },0);
+    });
+    optionsEl.appendChild(label);
+  });
+
+  feedbackEl.className = "feedback";
+  feedbackEl.innerHTML = "";
+  validateBtn.style.display = "block";
+  validateBtn.disabled = false;
+  nextBtn.style.display = "none";
+}
+
+function getSelected(){
+  return [...document.querySelectorAll('input[name="answer"]:checked')]
+    .map(el=>Number(el.value)).sort((a,b)=>a-b);
+}
+
+function arraysEqual(a,b){
+  return a.length === b.length && a.every((v,i)=>v===b[i]);
+}
+
+function validateAnswer(){
+  if(answered) return;
+
+  const selected = getSelected();
+  if(selected.length === 0){
+    alert("Veuillez sélectionner une réponse.");
+    return;
+  }
+
+  answered = true;
+  const item = questions[current];
+  const correct = arraysEqual(selected,item.answer);
+
+  if(correct) score++;
+
+  document.querySelectorAll(".option").forEach((label,index)=>{
+    const input = label.querySelector("input");
+    input.disabled = true;
+    label.classList.add("disabled");
+    if(item.answer.includes(index)) label.classList.add("correct");
+    if(selected.includes(index) && !item.answer.includes(index))
+      label.classList.add("incorrect");
+  });
+
+  feedbackEl.className = "feedback show " + (correct ? "correct" : "incorrect");
+  feedbackEl.innerHTML =
+    `<strong>${correct ? "✓ Bonne réponse !" : "✗ Réponse incorrecte"}</strong>
+     ${item.explanation}`;
+
+  document.getElementById("scoreText").textContent = `Score : ${score}`;
+  validateBtn.style.display = "none";
+  nextBtn.style.display = "block";
+  nextBtn.textContent =
+    current === questions.length-1 ? "Voir mon résultat →" : "Question suivante →";
+}
+
+function nextQuestion(){
+  if(!answered) return;
+  current++;
+  if(current < questions.length){
+    renderQuestion();
+  }else{
+    showResult();
+  }
+}
+
+function showResult(){
+  document.getElementById("quizCard").classList.add("hidden");
+  document.getElementById("resultCard").classList.remove("hidden");
+
+  document.getElementById("finalScore").textContent = `${score}/${questions.length}`;
+
+  let title, message;
+  const ratio = score/questions.length;
+
+  if(ratio === 1){
+    title = "Excellent ! 🌿";
+    message = "Vous maîtrisez très bien les principales interactions écologiques en forêt tropicale.";
+  }else if(ratio >= .7){
+    title = "Très bon résultat ! 🌳";
+    message = "Vous avez une bonne compréhension des interactions et de leur rôle dans l’écosystème forestier.";
+  }else if(ratio >= .5){
+    title = "Bon début ! 🌱";
+    message = "Vous avez les bases. Relisez les explications des questions pour consolider vos connaissances.";
+  }else{
+    title = "Continuez à apprendre ! 🍃";
+    message = "Les interactions écologiques sont nombreuses et complexes. Les explications du quiz peuvent vous aider à progresser.";
+  }
+
+  document.getElementById("resultTitle").textContent = title;
+  document.getElementById("resultMessage").textContent = message;
+}
+
+function restartQuiz(){
+  current = 0;
+  score = 0;
+  document.getElementById("resultCard").classList.add("hidden");
+  document.getElementById("quizCard").classList.remove("hidden");
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
+</body>
+</html>
