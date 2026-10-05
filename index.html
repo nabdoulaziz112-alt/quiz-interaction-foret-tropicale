@@ -198,16 +198,12 @@ button:disabled{opacity:.45;cursor:not-allowed}
 </div>
 
 <script>
-const questions = [
+    const questions = [
   {
     q: "Dans une forêt tropicale dense, quelle ressource peut fortement limiter la croissance des jeunes plantes en sous-bois ?",
     taper: "célibataire",
     instruction: "Choisissez une seule réponse.",
-    options: [
-      "La lumière",
-      "L'eau",
-      "Les nutriments"
-    ],
+    options: ["La lumière", "L'eau", "Les nutriments"],
     répondre: [0],
     explication: "En sous-bois, la lumière est très limitée, ce qui freine la croissance des jeunes plantes."
   },
@@ -243,12 +239,7 @@ const questions = [
     q: "Laquelle de ces interactions est négative (les deux espèces sont défavorisées) ?",
     taper: "célibataire",
     instruction: "Choisissez une seule réponse.",
-    options: [
-      "Prédation",
-      "Parasitisme",
-      "Mutualisme",
-      "Compétition"
-    ],
+    options: ["Prédation", "Parasitisme", "Mutualisme", "Compétition"],
     répondre: [3],
     explication: "La compétition défavorise les deux espèces car elles se disputent une ressource."
   },
@@ -257,12 +248,7 @@ const questions = [
     q: "Lesquelles de ces interactions sont positives pour une espèce et négatives pour l'autre ?",
     taper: "multiple",
     instruction: "Choisissez une ou plusieurs réponses.",
-    options: [
-      "Mutualisme",
-      "Prédation",
-      "Compétition",
-      "Parasitisme"
-    ],
+    options: ["Mutualisme", "Prédation", "Compétition", "Parasitisme"],
     répondre: [1, 3],
     explication: "La prédation et le parasitisme bénéficient à une espèce au détriment de l'autre."
   },
@@ -271,12 +257,7 @@ const questions = [
     q: "Laquelle de ces interactions est neutre (bénéfice pour une espèce tandis que l'autre n'est pas affectée) ?",
     taper: "célibataire",
     instruction: "Choisissez une seule réponse.",
-    options: [
-      "Commensalisme",
-      "Prédation",
-      "Mutualisme",
-      "Compétition"
-    ],
+    options: ["Commensalisme", "Prédation", "Mutualisme", "Compétition"],
     répondre: [0],
     explication: "Le commensalisme profite à une espèce sans affecter l'autre."
   },
@@ -293,6 +274,43 @@ const questions = [
     ],
     répondre: [1],
     explication: "Les COV servent à communiquer ou attirer des pollinisateurs."
+  },
+
+  {
+    q: "Quel est le rôle principal de la canopée dans une forêt tropicale ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
+    options: [
+      "Produire de l’oxygène",
+      "Réguler la lumière atteignant le sous-bois",
+      "Favoriser la prédation",
+      "Augmenter la compétition entre les plantes"
+    ],
+    répondre: [1],
+    explication: "La canopée filtre la lumière et influence fortement les conditions du sous-bois."
+  },
+
+  {
+    q: "Quel type d’interaction décrit une relation où une espèce bénéficie tandis que l’autre est désavantagée, sans être tuée ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
+    options: ["Mutualisme", "Parasitisme", "Prédation", "Commensalisme"],
+    répondre: [1],
+    explication: "Le parasitisme désavantage l’hôte sans le tuer immédiatement."
+  },
+
+  {
+    q: "Quel est l’effet principal de la compétition entre plantes dans les forêts tropicales ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
+    options: [
+      "Augmentation de la biodiversité",
+      "Réduction de l’accès aux ressources",
+      "Amélioration de la pollinisation",
+      "Augmentation de la dispersion des graines"
+    ],
+    répondre: [1],
+    explication: "La compétition réduit l’accès à la lumière, l’eau ou les nutriments."
   }
 ];
 let current = 0;
