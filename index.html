@@ -200,74 +200,99 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <script>
 const questions = [
   {
-   const questions = [
-  {
-    question: "Dans une forêt tropicale dense, quelle ressource peut fortement limiter la croissance des jeunes plantes en sous-bois ?",
+    q: "Dans une forêt tropicale dense, quelle ressource peut fortement limiter la croissance des jeunes plantes en sous-bois ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
     options: [
       "La lumière",
       "L'eau",
       "Les nutriments"
     ],
-    correct: 0
+    répondre: [0],
+    explication: "En sous-bois, la lumière est très limitée, ce qui freine la croissance des jeunes plantes."
   },
+
   {
-    question: "Quels sont les bénéfices apportés par les bactéries du genre Rhizobium à la plante ?",
+    q: "Quels sont les bénéfices apportés par les bactéries du genre Rhizobium à la plante ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
     options: [
       "Production de substances favorisant la croissance",
       "Protection contre les pathogènes",
       "Augmentation de la biodisponibilité de nutriments du sol (ex : azote)",
       "Absorption d'eau et de nutriments"
     ],
-    correct: 2
+    répondre: [2],
+    explication: "Les Rhizobium fixent l’azote atmosphérique, le rendant disponible pour la plante."
   },
+
   {
-    question: "Qu'est-ce que la myrmécochorie ?",
+    q: "Qu'est-ce que la myrmécochorie ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
     options: [
       "La pollinisation des fleurs par les fourmis",
       "La dispersion des graines par les fourmis",
       "La dispersion des graines par le vent"
     ],
-    correct: 1
+    répondre: [1],
+    explication: "La myrmécochorie est la dispersion des graines par les fourmis."
   },
+
   {
-    question: "Laquelle de ces interactions est négative (les deux espèces sont défavorisées) ?",
+    q: "Laquelle de ces interactions est négative (les deux espèces sont défavorisées) ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
     options: [
       "Prédation",
       "Parasitisme",
       "Mutualisme",
       "Compétition"
     ],
-    correct: 3
+    répondre: [3],
+    explication: "La compétition défavorise les deux espèces car elles se disputent une ressource."
   },
+
   {
-    question: "Lesquelles de ces interactions sont positives pour une espèce et négatives pour l'autre ?",
+    q: "Lesquelles de ces interactions sont positives pour une espèce et négatives pour l'autre ?",
+    taper: "multiple",
+    instruction: "Choisissez une ou plusieurs réponses.",
     options: [
       "Mutualisme",
       "Prédation",
       "Compétition",
       "Parasitisme"
     ],
-    correct: [1, 3]
+    répondre: [1, 3],
+    explication: "La prédation et le parasitisme bénéficient à une espèce au détriment de l'autre."
   },
+
   {
-    question: "Laquelle de ces interactions est neutre (bénéfice pour une espèce tandis que l'autre n'est pas affectée) ?",
+    q: "Laquelle de ces interactions est neutre (bénéfice pour une espèce tandis que l'autre n'est pas affectée) ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
     options: [
       "Commensalisme",
       "Prédation",
       "Mutualisme",
       "Compétition"
     ],
-    correct: 0
+    répondre: [0],
+    explication: "Le commensalisme profite à une espèce sans affecter l'autre."
   },
+
   {
-    question: "Quel rôle peuvent jouer les COV émis par les plantes ?",
+    q: "Quel rôle peuvent jouer les COV émis par les plantes ?",
+    taper: "célibataire",
+    instruction: "Choisissez une seule réponse.",
     options: [
       "Ils servent uniquement à la respiration de la plante",
       "Ils peuvent attirer des pollinisateurs ou alerter les plantes voisines en cas d'attaque",
       "Ils empêchent toute interaction avec les animaux",
       "Ils remplacent les racines pour absorber l'eau"
     ],
-    correct: 1
+    répondre: [1],
+    explication: "Les COV servent à communiquer ou attirer des pollinisateurs."
   }
 ];
 let current = 0;
