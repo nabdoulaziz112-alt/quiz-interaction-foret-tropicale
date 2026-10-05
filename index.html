@@ -200,107 +200,76 @@ button:disabled{opacity:.45;cursor:not-allowed}
 <script>
 const questions = [
   {
-    q:"Qu’est-ce que le mutualisme ?",
-    type:"single",
-    instruction:"Choisissez une seule réponse.",
-    options:[
-      "Une interaction bénéfique pour les deux partenaires",
-      "Une interaction où un seul organisme bénéficie",
-      "Une compétition entre deux espèces",
-      "Une relation toujours nuisible"
+   const questions = [
+  {
+    question: "Dans une forêt tropicale dense, quelle ressource peut fortement limiter la croissance des jeunes plantes en sous-bois ?",
+    options: [
+      "La lumière",
+      "L'eau",
+      "Les nutriments"
     ],
-    answer:[0],
-    explanation:"Le mutualisme est une interaction dans laquelle les deux partenaires retirent un bénéfice."
+    correct: 0
   },
   {
-    q:"Quelle interaction plante–animal est particulièrement importante pour la reproduction de nombreuses plantes tropicales ?",
-    type:"single",
-    instruction:"Choisissez une seule réponse.",
-    options:["La prédation","La pollinisation","La compétition","Le parasitisme"],
-    answer:[1],
-    explanation:"La pollinisation permet le transfert du pollen et favorise la reproduction sexuée des plantes."
-  },
-  {
-    q:"Dans une forêt tropicale dense, quelle ressource peut fortement limiter la croissance des jeunes plantes au sous-bois ?",
-    type:"single",
-    instruction:"Choisissez une seule réponse.",
-    options:["La lumière","Le vent","Le sel marin","La neige"],
-    answer:[0],
-    explanation:"La canopée réduit fortement la quantité de lumière disponible au sous-bois, ce qui crée une compétition importante pour la lumière."
-  },
-  {
-    q:"Quels organismes peuvent contribuer à la dispersion des graines ?",
-    type:"multi",
-    instruction:"Plusieurs réponses sont possibles.",
-    options:["Les oiseaux","Les mammifères frugivores","Certains insectes","Uniquement les champignons"],
-    answer:[0,1,2],
-    explanation:"Les oiseaux, les mammifères et certains insectes peuvent transporter les graines, parfois sur de grandes distances."
-  },
-  {
-    q:"La compétition entre plantes peut porter sur la lumière, l’eau et les nutriments du sol.",
-    type:"boolean",
-    instruction:"Choisissez Vrai ou Faux.",
-    options:["Vrai","Faux"],
-    answer:[0],
-    explanation:"Ces ressources sont souvent limitées et peuvent donc être au cœur des interactions compétitives entre plantes."
-  },
-  {
-    q:"Quel est un rôle important des champignons mycorhiziens ?",
-    type:"single",
-    instruction:"Choisissez une seule réponse.",
-    options:[
-      "Ils peuvent améliorer l’absorption de certains nutriments et de l’eau par les plantes",
-      "Ils empêchent toute croissance des racines",
-      "Ils remplacent totalement les feuilles",
-      "Ils détruisent systématiquement les arbres"
+    question: "Quels sont les bénéfices apportés par les bactéries du genre Rhizobium à la plante ?",
+    options: [
+      "Production de substances favorisant la croissance",
+      "Protection contre les pathogènes",
+      "Augmentation de la biodisponibilité de nutriments du sol (ex : azote)",
+      "Absorption d'eau et de nutriments"
     ],
-    answer:[0],
-    explanation:"Les mycorhizes sont des associations entre champignons et racines. Elles peuvent notamment améliorer l’acquisition de ressources par la plante."
+    correct: 2
   },
   {
-    q:"Un jaguar qui capture et consomme un autre animal est un exemple de :",
-    type:"single",
-    instruction:"Choisissez une seule réponse.",
-    options:["Mutualisme","Prédation","Pollinisation","Commensalisme"],
-    answer:[1],
-    explanation:"La prédation correspond à une interaction dans laquelle un organisme capture et consomme un autre organisme."
-  },
-  {
-    q:"Toutes les interactions entre espèces dans une forêt tropicale sont-elles bénéfiques pour les deux partenaires ?",
-    type:"boolean",
-    instruction:"Choisissez Vrai ou Faux.",
-    options:["Vrai","Faux"],
-    answer:[1],
-    explanation:"Non. Les interactions peuvent être positives, négatives ou neutres pour les partenaires : mutualisme, compétition, prédation, parasitisme, commensalisme, etc."
-  },
-  {
-    q:"Pourquoi les interactions entre espèces sont-elles importantes pour le fonctionnement d’une forêt tropicale ?",
-    type:"single",
-    instruction:"Choisissez une seule réponse.",
-    options:[
-      "Elles influencent la reproduction, la régénération, la distribution des espèces et les flux de matière",
-      "Elles n’ont aucun effet sur la forêt",
-      "Elles concernent uniquement les animaux",
-      "Elles empêchent toute évolution des espèces"
+    question: "Qu'est-ce que la myrmécochorie ?",
+    options: [
+      "La pollinisation des fleurs par les fourmis",
+      "La dispersion des graines par les fourmis",
+      "La dispersion des graines par le vent"
     ],
-    answer:[0],
-    explanation:"Les interactions structurent les communautés et participent à de nombreux processus écologiques essentiels au fonctionnement de l’écosystème."
+    correct: 1
   },
   {
-    q:"Quelle approche est la plus adaptée pour étudier les interactions écologiques en forêt tropicale ?",
-    type:"single",
-    instruction:"Choisissez la meilleure réponse.",
-    options:[
-      "Combiner observations de terrain, expérimentation et analyse des données",
-      "Observer une seule espèce pendant quelques minutes",
-      "Se limiter à des photos sans analyse",
-      "Ignorer les conditions environnementales"
+    question: "Laquelle de ces interactions est négative (les deux espèces sont défavorisées) ?",
+    options: [
+      "Prédation",
+      "Parasitisme",
+      "Mutualisme",
+      "Compétition"
     ],
-    answer:[0],
-    explanation:"Une combinaison d’observations, d’expériences et d’analyses permet de mieux caractériser les interactions et leur contexte écologique."
+    correct: 3
+  },
+  {
+    question: "Lesquelles de ces interactions sont positives pour une espèce et négatives pour l'autre ?",
+    options: [
+      "Mutualisme",
+      "Prédation",
+      "Compétition",
+      "Parasitisme"
+    ],
+    correct: [1, 3]
+  },
+  {
+    question: "Laquelle de ces interactions est neutre (bénéfice pour une espèce tandis que l'autre n'est pas affectée) ?",
+    options: [
+      "Commensalisme",
+      "Prédation",
+      "Mutualisme",
+      "Compétition"
+    ],
+    correct: 0
+  },
+  {
+    question: "Quel rôle peuvent jouer les COV émis par les plantes ?",
+    options: [
+      "Ils servent uniquement à la respiration de la plante",
+      "Ils peuvent attirer des pollinisateurs ou alerter les plantes voisines en cas d'attaque",
+      "Ils empêchent toute interaction avec les animaux",
+      "Ils remplacent les racines pour absorber l'eau"
+    ],
+    correct: 1
   }
 ];
-
 let current = 0;
 let score = 0;
 let answered = false;
